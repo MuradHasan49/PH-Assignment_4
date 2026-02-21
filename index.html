@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PH-Assignment-4</title>
-    <!-- Tailwind width daisy ul  -->
+
+    <!-- DaisyUI + Tailwind -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <!-- Fonts -->
+    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
         * {
             font-family: "Geist", sans-serif;
@@ -20,26 +22,88 @@
     </style>
 </head>
 
-<body>
-    <header class="w-11/12 mx-auto bg-red-200">
-        <h1>Job Application Tracker</h1>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="w-11/12 mx-auto py-6">
+            <h1 class="text-3xl font-bold text-gray-800">Job Application Tracker</h1>
+        </div>
     </header>
-    <section class="w-11/12 mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div class="bg-purple-500">
-                <h3>Total</h3>
-                <p>8</p>
+
+    <!-- Stats Section -->
+    <section class="w-11/12 mx-auto mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="card bg-white shadow-sm border">
+                <div class="card-body">
+                    <h3 class="text-sm text-gray-500">Total Applications</h3>
+                    <p class="text-3xl font-semibold text-gray-800">8</p>
+                </div>
             </div>
-            <div class="bg-purple-500">
-                <h3>Interview</h3>
-                <p>0</p>
+
+            <div class="card bg-white shadow-sm border">
+                <div class="card-body">
+                    <h3 class="text-sm text-gray-500">Interview</h3>
+                    <p class="text-3xl font-semibold text-green-600">0</p>
+                </div>
             </div>
-            <div class="bg-purple-500">
-                <h3>Rejected</h3>
-                <p>0</p>
+
+            <div class="card bg-white shadow-sm border">
+                <div class="card-body">
+                    <h3 class="text-sm text-gray-500">Rejected</h3>
+                    <p class="text-3xl font-semibold text-red-600">0</p>
+                </div>
             </div>
+
         </div>
     </section>
+
+    <!-- Job Cards Section -->
+    <section class="w-11/12 mx-auto mt-10 mb-10">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800">Available Jobs</h2>
+            <p class="text-gray-500">8 Jobs</p>
+        </div>
+
+        <!-- Toggle button -->
+         <div class="py-5 text-center lg:text-start">
+            <button class="btn px-10">All</button>
+            <button class="btn">Interview</button>
+            <button class="btn">Rejected</button>
+         </div>
+
+        <!-- Job Card -->
+        <div class="card bg-white shadow-md border">
+            <div class="card-body">
+
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="card-title text-xl">Mobile First Corp</h2>
+                        <p class="text-gray-600">React Native Developer</p>
+                    </div>
+                    <span class="badge badge-outline py-4">Not Applied</span>
+                </div>
+
+                <p class="text-sm text-gray-500 mt-2">
+                    Remote • Full-time • $130,000 - $175,000
+                </p>
+
+                <p class="mt-4 text-gray-700">
+                    Build cross-platform mobile applications using React Native.
+                    Work on products used by millions of users worldwide.
+                </p>
+
+                <div class="card-actions mt-6">
+                    <button class="btn btn-outline btn-success">Interview</button>
+                    <button class="btn btn-outline btn-error">Reject</button>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
 </body>
 
 </html>
