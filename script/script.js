@@ -1,188 +1,195 @@
-//get job Container
-let jobContainer = document.getElementById('jobContainer')
-// interviewSection
-let interviewSection = document.getElementById('interviewSection')
-// rejectedSection
-let rejectedSection = document.getElementById('rejectedSection')
-//toggle button 
-let toggle_all = document.getElementById('toggle-all')
-let toggle_interview = document.getElementById('toggle-interview')
-let toggle_rejected = document.getElementById('toggle-rejected')
+// --- ১. এলিমেন্টগুলো সিলেক্ট করা (Selection) ---
+const jobContainer = document.getElementById('jobContainer');
+const interviewSection = document.getElementById('interviewSection');
+const rejectedSection = document.getElementById('rejectedSection');
 
-//get the status
+const toggleAllBtn = document.getElementById('toggle-all');
+const toggleInterviewBtn = document.getElementById('toggle-interview');
+const toggleRejectedBtn = document.getElementById('toggle-rejected');
 
-let total = document.getElementById('total')
-let interview = document.getElementById('interview')
-let rejected = document.getElementById('rejected')
+const totalDisplay = document.getElementById('total');
+const totalDisplay2 = document.getElementById('total2');
+const interviewDisplay = document.getElementById('interview');
+const rejectedDisplay = document.getElementById('rejected');
 
-// empty array
-let interviewCount = [];
-let rejectedConunt = [];
+// --- ২. ডাটা রাখার লিস্ট (State) ---
+let interviewList = [];
+let rejectedList = [];
 
-//status function
-function jobStatus() {
-    //claculate status
-    total.innerText = jobContainer.children.length
-    interview.innerText = interviewCount.length;
-    rejected.innerText = rejectedConunt.length;
-
+// --- ৩. স্ট্যাটাস আপডেট করার ফাংশন ---
+function updateJobCounts() {
+    totalDisplay.innerText = jobContainer.children.length;
+    interviewDisplay.innerText = interviewList.length;
+    rejectedDisplay.innerText = rejectedList.length;
 }
-jobStatus()
 
-//toggle button function
-document.getElementById('perent').addEventListener("click", function (e) {
+// --- ৪. কার্ড থেকে ডাটা সংগ্রহ করার ফাংশন ---
+function extractJobData(cardElement) {
+    return {
+        cardTtitle: cardElement.querySelector(".card-title").innerText,
+        cardDis: cardElement.querySelector(".text-gray-600")?.innerText || cardElement.querySelector(".cardDis")?.innerText,
+        priceP: cardElement.querySelector(".priceP").innerText,
+        jobDis: cardElement.querySelector(".jobDis").innerText
+    };
+}
 
-    toggle_all.classList.add('bg-gray-300', 'text-[#64748B]')
-    toggle_interview.classList.add('bg-gray-300', 'text-[#64748B]')
-    toggle_rejected.classList.add('bg-gray-300', 'text-[#64748B]')
+// --- ৫. টগল বাটন বা নেভিগেশন লজিক ---
+document.getElementById('perent').addEventListener("click", function (event) {
+    const clickedBtn = event.target.closest('button');
+    if (!clickedBtn) return;
 
-    toggle_all.classList.remove('bg-[#3B82F6]', 'text-white')
-    toggle_interview.classList.remove('bg-[#3B82F6]', 'text-white')
-    toggle_rejected.classList.remove('bg-[#3B82F6]', 'text-white')
+    // সব বাটনের ডিজাইন রিসেট করা
+    // ১. সবগুলো বাটন একটি অ্যারের মধ্যে রাখা
+    const buttons = [toggleAllBtn, toggleInterviewBtn, toggleRejectedBtn];
 
-    let select = e.target
-    select.classList.remove('bg-gray-300', 'text-[#64748B]')
-    select.classList.add('bg-[#3B82F6]', 'text-white')
+    buttons.forEach(btn => {
+        // প্রথমে সব বাটন থেকে নীল কালার সরিয়ে ধূসর কালার দেওয়া
+        btn.classList.remove('bg-[#3B82F6]', 'text-white');
+        btn.classList.add('bg-gray-300', 'text-[#64748B]');
+    });
 
-    if (select.id === 'toggle-interview') {
-        jobContainer.classList.add('hidden');
-        interviewSection.classList.remove('hidden');
-        console.log("inter")
-        interviewSection.innerHTML = "";
-        interviewCount.forEach(interview => {
-            let newDiv = document.createElement("div");
-            newDiv.className = 'card bg-white shadow-md border  ';
-            newDiv.innerHTML = `
-                 <div class="card-body">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h2 class="card-title text-xl">${interview.cardTtitle}</h2>
-                            <p class="text-gray-600">${interview.cardDis}</p>
-                        </div>
-                        <div class="grid gap-2">
-                             <span class="badge badge-outline py-4 text-green-600 font-semibold">INTERVIEW</span>
-                             <button class="btn btn-outline btn-error btn-sm deletebtn">
-                                <i class="fa-solid fa-trash-can"></i> Delete
-                             </button>
-                        </div>
-                    </div>
-                     <p class="priceP text-sm text-gray-500 mt-2">
-                        ${interview.priceP}
-                    </p>
-                    <p class="jobDis mt-4 text-gray-700">
-                        ${interview.jobDis}
-                    </p>
-                    <div class="card-actions mt-6">
-                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
-                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
-                    </div>
-                    </div>`;
-            interviewSection.appendChild(newDiv);
-        });
-        rejectedSection.classList.add('hidden');
+    // ২. শুধুমাত্র যে বাটনটি ক্লিক করা হয়েছে (clickedBtn), সেটিতে নীল কালার দেওয়া
+    clickedBtn.classList.remove('bg-gray-300', 'text-[#64748B]');
+    clickedBtn.classList.add('bg-[#3B82F6]', 'text-white');
 
-    } else if ((select.id === 'toggle-rejected')) {
-        jobContainer.classList.add('hidden');
-        interviewSection.classList.add('hidden');
+    // সব সেকশন হাইড করা
+    jobContainer.classList.add('hidden');
+    interviewSection.classList.add('hidden');
+    rejectedSection.classList.add('hidden');
 
-        rejectedSection.innerHTML='';
+    // যে বাটন ক্লিক করা হয়েছে সেই সেকশন দেখানো
+    if (clickedBtn.id === 'toggle-interview') {
+        renderInterviewSection();
+        totalDisplay2.innerHTML = interviewList.length + " jobs";
+    } else if (clickedBtn.id === 'toggle-rejected') {
+        renderRejectedSection();
+        totalDisplay2.innerHTML = rejectedList.length + " jobs";;
 
-        rejectedConunt.filter(reject=>{
-            let rejectDiv = document.createElement('div')
-            rejectDiv.className= 'card bg-white shadow-md border  '
-            rejectDiv.innerHTML=`
-             <div class="card-body">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h2 class="card-title text-xl">${reject.cardTtitle}</h2>
-                            <p class="text-gray-600">${reject.cardDis}</p>
-                        </div>
-                        <div class="grid gap-2">
-                             <span class="badge badge-outline py-4 text-green-600 font-semibold">INTERVIEW</span>
-                             <button class="btn btn-outline btn-error btn-sm deletebtn">
-                                <i class="fa-solid fa-trash-can"></i> Delete
-                             </button>
-                        </div>
-                    </div>
-                     <p class="priceP text-sm text-gray-500 mt-2">
-                        ${reject.priceP}
-                    </p>
-                    <p class="jobDis mt-4 text-gray-700">
-                        ${reject.jobDis}
-                    </p>
-                    <div class="card-actions mt-6">
-                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
-                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
-                    </div>
-                    </div>
-            `
-            rejectedSection.appendChild(rejectDiv)
-        })
-
-
-        console.log('rej')
-        rejectedSection.classList.remove('hidden');
-
-    }
-    else if (select.id === 'toggle-all') {
+    } else {
+        totalDisplay2.innerHTML = jobContainer.children.length + " jobs";;
         jobContainer.classList.remove('hidden');
-        interviewSection.classList.add('hidden');
-        rejectedSection.classList.add('hidden')
-        console.log('all')
     }
-})
+});
 
+// --- ৬. ইন্টারভিউ সেকশন রেন্ডার করা ---
+function renderInterviewSection() {
+    interviewSection.classList.remove('hidden');
+    interviewSection.innerHTML = ""; // আগের ডাটা পরিষ্কার করা
 
-jobContainer.addEventListener("click", function (e) {
-    let parenNode = e.target.parentNode.parentNode
-    let statusOf = parenNode.querySelector('.badge')
+    interviewList.forEach(job => {
+        const div = document.createElement("div");
+        div.className = 'card bg-white shadow-md border mb-4';
+        div.innerHTML = `
+            <div class="card-body">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="card-title text-xl">${job.cardTtitle}</h2>
+                        <p class="text-gray-600">${job.cardDis}</p>
+                    </div>
+                    <div class="grid gap-2 text-right">
+                        <span class="badge badge-success py-4 text-white font-semibold">INTERVIEW</span>
+                        <button class="btn btn-outline btn-error btn-sm deletebtn"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+                <p class="priceP text-sm text-gray-500 mt-2">${job.priceP}</p>
+                <p class="jobDis mt-4 text-gray-700">${job.jobDis}</p>
+                <div class="card-actions mt-6">
+                    <button class="rejectBtn btn btn-outline btn-error btn-sm w-full">MOVE TO REJECTED</button>
+                </div>
+            </div>`;
+        interviewSection.appendChild(div);
+    });
+}
 
-    if (e.target.classList.contains('interviewBtn')) {
-        statusOf.style.color = 'green';
-        statusOf.innerText = "INTERVIEW"
-    } else if (e.target.classList.contains('rejectBtn')) {
-        statusOf.style.color = 'red';
-        statusOf.innerText = "REJECTED"
+// --- ৭. রিজেক্টেড সেকশন রেন্ডার করা ---
+function renderRejectedSection() {
+    rejectedSection.classList.remove('hidden');
+    rejectedSection.innerHTML = "";
+
+    rejectedList.forEach(job => {
+        const div = document.createElement("div");
+        div.className = 'card bg-white shadow-md border mb-4';
+        div.innerHTML = `
+            <div class="card-body">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="card-title text-xl">${job.cardTtitle}</h2>
+                        <p class="text-gray-600">${job.cardDis}</p>
+                    </div>
+                    <div class="grid gap-2 text-right">
+                        <span class="badge badge-error py-4 text-white font-semibold">REJECTED</span>
+                        <button class="btn btn-outline btn-error btn-sm deletebtn"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+                <p class="priceP text-sm text-gray-500 mt-2">${job.priceP}</p>
+                <p class="jobDis mt-4 text-gray-700">${job.jobDis}</p>
+                <div class="card-actions mt-6">
+                    <button class="interviewBtn btn btn-outline btn-success btn-sm w-full">MOVE TO INTERVIEW</button>
+                </div>
+            </div>`;
+        rejectedSection.appendChild(div);
+    });
+}
+
+// --- ৮. কমন হ্যান্ডলার (মুভ এবং ডিলিট করার জন্য) ---
+function handleJobActions(event, source) {
+    const card = event.target.closest('.card');
+    if (!card) return;
+
+    const data = extractJobData(card);
+    const title = data.cardTtitle;
+
+    // মুভ টু ইন্টারভিউ
+    if (event.target.classList.contains('interviewBtn')) {
+        rejectedList = rejectedList.filter(item => item.cardTtitle !== title);
+        if (!interviewList.some(item => item.cardTtitle === title)) {
+            interviewList.push(data);
+        }
+        if (source !== 'main') card.remove();
+    }
+    // মুভ টু রিজেক্টেড
+    else if (event.target.classList.contains('rejectBtn')) {
+        interviewList = interviewList.filter(item => item.cardTtitle !== title);
+        if (!rejectedList.some(item => item.cardTtitle === title)) {
+            rejectedList.push(data);
+        }
+        if (source !== 'main') card.remove();
+    }
+    // ডিলিট করা
+    else if (event.target.classList.contains('deletebtn')) {
+        card.remove();
+        interviewList = interviewList.filter(item => item.cardTtitle !== title);
+        rejectedList = rejectedList.filter(item => item.cardTtitle !== title);
     }
 
-
-    if (e.target.classList.contains('deletebtn')) {
-        e.target.parentNode.parentNode.parentNode.parentNode.remove();
-    }
-    jobStatus()
-
-
-    let cardTtitle = parenNode.querySelector(".card-title").innerText
-    let cardDis = parenNode.querySelector(".cardDis").innerText
-    let deletebtn = parenNode.querySelector(".deletebtn").innerText
-    let priceP = parenNode.querySelector(".priceP").innerText
-    let jobDis = parenNode.querySelector(".jobDis").innerText
-    let interviewBtn = parenNode.querySelector(".interviewBtn").innerText
-    let rejectBtn = parenNode.querySelector(".rejectBtn").innerText
-
-    let cardD = {
-        cardTtitle,
-        cardDis,
-        statusOf,
-        deletebtn,
-        priceP,
-        jobDis,
-        interviewBtn,
-        rejectBtn
-
-    }
-    let validation = interviewCount.find(item => item.cardTtitle == cardD.cardTtitle)
-    let validation2 = rejectedConunt.find(item => item.cardTtitle == cardD.cardTtitle)
-
-    if (!validation && e.target.classList.contains('interviewBtn')) {
-        interviewCount.push(cardD)
-        console.log(interviewCount)
-    } else if (!validation2 && e.target.classList.contains('rejectBtn')) {
-        rejectedConunt.push(cardD)
+    // অল জব সেকশনে ব্যাজ আপডেট
+    if (source === 'main') {
+        const badge = card.querySelector('.badge');
+        if (event.target.classList.contains('interviewBtn')) {
+            badge.className = "badge badge-success py-4 text-white font-semibold";
+            badge.innerText = "INTERVIEW";
+        } else if (event.target.classList.contains('rejectBtn')) {
+            badge.className = "badge badge-error py-4 text-white font-semibold";
+            badge.innerText = "REJECTED";
+        }
     }
 
-    jobStatus()
-})
+    updateJobCounts();
+}
 
-// push new el
+// ১. মেইন জব কন্টেইনারের জন্য লিসেনার
+jobContainer.addEventListener('click', function (e) {
+    handleJobActions(e, 'main');
+});
 
+// ২. ইন্টারভিউ সেকশনের জন্য লিসেনার
+interviewSection.addEventListener('click', function (e) {
+    handleJobActions(e, 'interview');
+});
+
+// ৩. রিজেক্টেড সেকশনের জন্য লিসেনার
+rejectedSection.addEventListener('click', function (e) {
+    handleJobActions(e, 'rejected');
+});
+// শুরুতে একবার কাউন্ট চালানো
+updateJobCounts();
