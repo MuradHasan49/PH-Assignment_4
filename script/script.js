@@ -25,6 +25,7 @@ function jobStatus(){
 }
 jobStatus()
 
+//toggle button function
 document.getElementById('perent').addEventListener("click",function(e){
 
     toggle_all.classList.add('bg-gray-300', 'text-[#64748B]')
@@ -41,25 +42,16 @@ document.getElementById('perent').addEventListener("click",function(e){
 })
 
 
-// let interviewBtn = document.querySelectorAll('#interviewBtn')
-// let statusa = document.getElementById('status')
-// console.log(statusa.innerText)
-// for(let one of interviewBtn){
-// one.addEventListener("click",function(e){
-//     statusa.innerText= "applid"
-//     console.log(e.target)
-// })
-// }
 jobContainer.addEventListener("click",function(e){
     let parenNode = e.target.parentNode.parentNode
     let statusOf = parenNode.querySelector('.badge')
 
     if(e.target.classList.contains('interviewBtn')){
         statusOf.style.color = 'green';
-    statusOf.innerText = "interview"
+    statusOf.innerText = "INTERVIEW"
     }else if(e.target.classList.contains('rejectBtn')){
         statusOf.style.color = 'red';
-        statusOf.innerText = "Reject"
+        statusOf.innerText = "REJECTED"
     }
 
 
