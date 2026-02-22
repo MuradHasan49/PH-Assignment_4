@@ -2,6 +2,8 @@
 let jobContainer = document.getElementById('jobContainer')
 // interviewSection
 let interviewSection = document.getElementById('interviewSection')
+// rejectedSection
+let rejectedSection = document.getElementById('rejectedSection')
 //toggle button 
 let toggle_all = document.getElementById('toggle-all')
 let toggle_interview = document.getElementById('toggle-interview')
@@ -44,8 +46,8 @@ document.getElementById('perent').addEventListener("click", function (e) {
 
     if (select.id === 'toggle-interview') {
         jobContainer.classList.add('hidden');
-        interviewSection.classList.remove('hidden'); 
-
+        interviewSection.classList.remove('hidden');
+        console.log("inter")
         interviewSection.innerHTML = "";
         interviewCount.forEach(interview => {
             let newDiv = document.createElement("div");
@@ -77,10 +79,56 @@ document.getElementById('perent').addEventListener("click", function (e) {
                     </div>`;
             interviewSection.appendChild(newDiv);
         });
+        rejectedSection.classList.add('hidden');
 
-    } else if (select.id === 'toggle-all') {
+    } else if ((select.id === 'toggle-rejected')) {
+        jobContainer.classList.add('hidden');
+        interviewSection.classList.add('hidden');
+
+        rejectedSection.innerHTML='';
+
+        rejectedConunt.filter(reject=>{
+            let rejectDiv = document.createElement('div')
+            rejectDiv.className= 'card bg-white shadow-md border  '
+            rejectDiv.innerHTML=`
+             <div class="card-body">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="card-title text-xl">${reject.cardTtitle}</h2>
+                            <p class="text-gray-600">${reject.cardDis}</p>
+                        </div>
+                        <div class="grid gap-2">
+                             <span class="badge badge-outline py-4 text-green-600 font-semibold">INTERVIEW</span>
+                             <button class="btn btn-outline btn-error btn-sm deletebtn">
+                                <i class="fa-solid fa-trash-can"></i> Delete
+                             </button>
+                        </div>
+                    </div>
+                     <p class="priceP text-sm text-gray-500 mt-2">
+                        ${reject.priceP}
+                    </p>
+                    <p class="jobDis mt-4 text-gray-700">
+                        ${reject.jobDis}
+                    </p>
+                    <div class="card-actions mt-6">
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
+                    </div>
+                    </div>
+            `
+            rejectedSection.appendChild(rejectDiv)
+        })
+
+
+        console.log('rej')
+        rejectedSection.classList.remove('hidden');
+
+    }
+    else if (select.id === 'toggle-all') {
         jobContainer.classList.remove('hidden');
         interviewSection.classList.add('hidden');
+        rejectedSection.classList.add('hidden')
+        console.log('all')
     }
 })
 
