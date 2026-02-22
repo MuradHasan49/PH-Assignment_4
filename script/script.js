@@ -41,29 +41,38 @@ document.getElementById('perent').addEventListener("click", function (e) {
     let select = e.target
     select.classList.remove('bg-gray-300', 'text-[#64748B]')
     select.classList.add('bg-[#3B82F6]', 'text-white')
-    
+
     if (select.id === 'toggle-interview') {
         jobContainer.classList.add('hidden');
-        // interviewSection.classList.remove('hidden');
-        
-        interviewSection.innerHTML = "";
+        interviewSection.classList.remove('hidden'); 
 
+        interviewSection.innerHTML = "";
         interviewCount.forEach(interview => {
             let newDiv = document.createElement("div");
-            newDiv.className = 'card bg-white shadow-md border';
+            newDiv.className = 'card bg-white shadow-md border  ';
             newDiv.innerHTML = `
                  <div class="card-body">
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="card-title text-xl">${interview.cardTtitle}</h2>
-                            <p class="text-gray-600">Senior Backend Engineer</p>
+                            <p class="text-gray-600">${interview.cardDis}</p>
                         </div>
                         <div class="grid gap-2">
-                             <span class="badge badge-outline py-4 font-semibold">Not Applied</span>
+                             <span class="badge badge-outline py-4 text-green-600 font-semibold">INTERVIEW</span>
                              <button class="btn btn-outline btn-error btn-sm deletebtn">
                                 <i class="fa-solid fa-trash-can"></i> Delete
                              </button>
                         </div>
+                    </div>
+                     <p class="priceP text-sm text-gray-500 mt-2">
+                        ${interview.priceP}
+                    </p>
+                    <p class="jobDis mt-4 text-gray-700">
+                        ${interview.jobDis}
+                    </p>
+                    <div class="card-actions mt-6">
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                     </div>
                     </div>`;
             interviewSection.appendChild(newDiv);
