@@ -94,7 +94,8 @@ function renderInterviewSection() {
                 <p class="priceP text-sm text-gray-500 mt-2">${job.priceP}</p>
                 <p class="jobDis mt-4 text-gray-700">${job.jobDis}</p>
                 <div class="card-actions mt-6">
-                    <button class="rejectBtn btn btn-outline btn-error btn-sm w-full">MOVE TO REJECTED</button>
+                <button class=" btn btn-outline btn-success">INTERVIEW</button>
+                    <button class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                 </div>
             </div>`;
         interviewSection.appendChild(div);
@@ -124,7 +125,8 @@ function renderRejectedSection() {
                 <p class="priceP text-sm text-gray-500 mt-2">${job.priceP}</p>
                 <p class="jobDis mt-4 text-gray-700">${job.jobDis}</p>
                 <div class="card-actions mt-6">
-                    <button class="interviewBtn btn btn-outline btn-success btn-sm w-full">MOVE TO INTERVIEW</button>
+                    <button class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                     <button class=" btn btn-outline btn-error">REJECTED</button>
                 </div>
             </div>`;
         rejectedSection.appendChild(div);
