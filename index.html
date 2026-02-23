@@ -79,20 +79,20 @@
             <button id="toggle-rejected" class="btn button">Rejected</button>
         </div>
         <!-- no job available -->
-         <section id="noJobSection" class="hidden">
+        <section id="noJobSection" class="hidden">
             <div class="bg-white shadow-md border rounded-md flex flex-col justify-center items-center space-y-3 py-8">
                 <img src="./img/jobs.png" alt="">
                 <h2 class="font-bold">No jobs available</h2>
                 <p class="text-gray-400">Check back soon for new job opportunities</p>
             </div>
-         </section>
+        </section>
         <!-- rejected section -->
-         <section id="rejectedSection" class="space-y-2">
+        <section id="rejectedSection" class="space-y-2 hidden">
 
-         </section>
+        </section>
 
         <!-- interview section -->
-        <section id="interviewSection" class="space-y-2">
+        <section id="interviewSection" class="space-y-2 hidden">
 
         </section>
 
@@ -159,163 +159,168 @@
                 </div>
             </div>
 
-            <!-- <div class="card bg-white shadow-md border">
+            <!-- card 3 -->
+            <div class="card bg-white shadow-md border">
                 <div class="card-body">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h2 class="card-title text-xl">Pixel Perfect Agency</h2>
-                            <p class="text-gray-600">Frontend Developer (Vue.js)</p>
+                            <h2 class="card-title text-xl">CloudScale AI</h2>
+                            <p class="cardDis text-gray-600">DevOps Engineer</p>
                         </div>
-                           <div class="grid col-span-1 gap-2">
-                            <span id="status" class="badge badge-outline py-4">Not Applied</span>
-                            <span class="btn btn-outline btn-error"><i class="fa-solid fa-trash-can"></i>Delete</span>
+                        <div class="grid col-span-1 gap-2">
+                            <span class="badge badge-outline font-semibold py-4">Not Applied</span>
+                            <span class="btn btn-outline btn-error deletebtn"><i
+                                    class="fa-solid fa-trash-can"></i>Delete</span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">
-                        Remote • Contract • $80,000 - $110,000
+                    <p class="priceP text-sm text-gray-500 mt-2">
+                        Remote • Full-time • $120,000 - $160,000
                     </p>
-                    <p class="mt-4 text-gray-700">
-                        Convert high-fidelity Figma designs into responsive Vue 3 components.
-                        Strong focus on CSS animations and accessibility standards.
+                    <p class="jobDis mt-4 text-gray-700">
+                        Automate cloud deployments using Terraform and Kubernetes.
+                        Maintain high availability for our global AI-driven infrastructure.
                     </p>
                     <div class="card-actions mt-6">
-                        <button  id="interviewBtn"  class="btn btn-outline btn-success">Interview</button>
-                        <button class="btn btn-outline btn-error">Reject</button>
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
-            <!-- <div class="card bg-white shadow-md border">
+            <div class="card bg-white shadow-md border">
+                <div class="card-body">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="card-title text-xl">Creative Studio</h2>
+                            <p class="cardDis text-gray-600">UI/UX Designer</p>
+                        </div>
+                        <div class="grid col-span-1 gap-2">
+                            <span class="badge badge-outline font-semibold py-4">Not Applied</span>
+                            <span class="btn btn-outline btn-error deletebtn"><i
+                                    class="fa-solid fa-trash-can"></i>Delete</span>
+                        </div>
+                    </div>
+                    <p class="priceP text-sm text-gray-500 mt-2">
+                        On-site • Contract • $80,000 - $110,000
+                    </p>
+                    <p class="jobDis mt-4 text-gray-700">
+                        Design intuitive user interfaces for web and mobile platforms.
+                        Translate complex requirements into clean and functional design systems.
+                    </p>
+                    <div class="card-actions mt-6">
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-white shadow-md border">
+                <div class="card-body">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="card-title text-xl">Cyber Shield</h2>
+                            <p class="cardDis text-gray-600">Security Analyst</p>
+                        </div>
+                        <div class="grid col-span-1 gap-2">
+                            <span class="badge badge-outline font-semibold py-4">Not Applied</span>
+                            <span class="btn btn-outline btn-error deletebtn"><i
+                                    class="fa-solid fa-trash-can"></i>Delete</span>
+                        </div>
+                    </div>
+                    <p class="priceP text-sm text-gray-500 mt-2">
+                        Hybrid • Full-time • $140,000 - $185,000
+                    </p>
+                    <p class="jobDis mt-4 text-gray-700">
+                        Monitor networks for security breaches and respond to cyber threats.
+                        Perform regular audits and implement advanced encryption protocols.
+                    </p>
+                    <div class="card-actions mt-6">
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-white shadow-md border">
                 <div class="card-body">
                     <div class="flex justify-between items-start">
                         <div>
                             <h2 class="card-title text-xl">FinTech Solutions</h2>
-                            <p class="text-gray-600">Full Stack Engineer</p>
+                            <p class="cardDis text-gray-600">Full Stack Developer</p>
                         </div>
-                          <div class="grid col-span-1 gap-2">
-                            <span class="badge badge-outline py-4">Not Applied</span>
-                            <span class="btn btn-outline btn-error"><i class="fa-solid fa-trash-can"></i>Delete</span>
+                        <div class="grid col-span-1 gap-2">
+                            <span class="badge badge-outline font-semibold py-4">Not Applied</span>
+                            <span class="btn btn-outline btn-error deletebtn"><i
+                                    class="fa-solid fa-trash-can"></i>Delete</span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">
-                        On-site • Full-time • $120,000 - $160,000
+                    <p class="priceP text-sm text-gray-500 mt-2">
+                        Remote • Full-time • $110,000 - $150,000
                     </p>
-                    <p class="mt-4 text-gray-700">
-                        Design and implement secure banking features using Next.js and Prisma.
-                        Help us build the future of decentralized digital assets.
+                    <p class="jobDis mt-4 text-gray-700">
+                        Build secure financial tools using MERN stack and TypeScript.
+                        Optimize performance for real-time transaction processing dashboards.
                     </p>
                     <div class="card-actions mt-6">
-                        <button class="btn btn-outline btn-success">Interview</button>
-                        <button class="btn btn-outline btn-error">Reject</button>
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                     </div>
                 </div>
             </div>
+
             <div class="card bg-white shadow-md border">
                 <div class="card-body">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h2 class="card-title text-xl">Creative Flow</h2>
-                            <p class="text-gray-600">Product Designer</p>
+                            <h2 class="card-title text-xl">GameVerse</h2>
+                            <p class="cardDis text-gray-600">Game Developer</p>
                         </div>
-                              <div class="grid col-span-1 gap-2">
-                            <span class="badge badge-outline py-4">Not Applied</span>
-                            <span class="btn btn-outline btn-error"><i class="fa-solid fa-trash-can"></i>Delete</span>
+                        <div class="grid col-span-1 gap-2">
+                            <span class="badge badge-outline font-semibold py-4">Not Applied</span>
+                            <span class="btn btn-outline btn-error deletebtn"><i
+                                    class="fa-solid fa-trash-can"></i>Delete</span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">
-                        Remote • Full-time • $95,000 - $130,000
+                    <p class="priceP text-sm text-gray-500 mt-2">
+                        On-site • Full-time • $95,000 - $135,000
                     </p>
-                    <p class="mt-4 text-gray-700">
-                        Lead the redesign of our core SaaS dashboard. Conduct user research
-                        and create interactive prototypes for our engineering team.
+                    <p class="jobDis mt-4 text-gray-700">
+                        Create immersive 3D experiences using Unity and C#.
+                        Collaborate with artists to implement high-quality visual effects.
                     </p>
                     <div class="card-actions mt-6">
-                        <button class="btn btn-outline btn-success">Interview</button>
-                        <button class="btn btn-outline btn-error">Reject</button>
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                     </div>
                 </div>
             </div>
+
             <div class="card bg-white shadow-md border">
                 <div class="card-body">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h2 class="card-title text-xl">CloudScale Systems</h2>
-                            <p class="text-gray-600">DevOps Engineer</p>
+                            <h2 class="card-title text-xl">NextGen Health</h2>
+                            <p class="cardDis text-gray-600">ML Engineer</p>
                         </div>
-                           <div class="grid col-span-1 gap-2">
-                            <span class="badge badge-outline py-4">Not Applied</span>
-                            <span class="btn btn-outline btn-error"><i class="fa-solid fa-trash-can"></i>Delete</span>
+                        <div class="grid col-span-1 gap-2">
+                            <span class="badge badge-outline font-semibold py-4">Not Applied</span>
+                            <span class="btn btn-outline btn-error deletebtn"><i
+                                    class="fa-solid fa-trash-can"></i>Delete</span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">
+                    <p class="priceP text-sm text-gray-500 mt-2">
                         Remote • Full-time • $150,000 - $200,000
                     </p>
-                    <p class="mt-4 text-gray-700">
-                        Manage Kubernetes clusters and automate CI/CD pipelines across AWS regions.
-                        Focus on infrastructure as code and zero-downtime deployments.
+                    <p class="jobDis mt-4 text-gray-700">
+                        Develop predictive models for medical diagnosis using Python.
+                        Scale machine learning pipelines on big healthcare datasets.
                     </p>
                     <div class="card-actions mt-6">
-                        <button class="btn btn-outline btn-success">Interview</button>
-                        <button class="btn btn-outline btn-error">Reject</button>
+                        <button id="interviewBtn" class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
+                        <button id="rejectBtn" class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                     </div>
                 </div>
             </div>
-            <div class="card bg-white shadow-md border">
-                <div class="card-body">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h2 class="card-title text-xl">SafeGuard Software</h2>
-                            <p class="text-gray-600">QA Automation Specialist</p>
-                        </div>
-                 <div class="grid col-span-1 gap-2">
-                            <span class="badge badge-outline py-4">Not Applied</span>
-                            <span class="btn btn-outline btn-error"><i class="fa-solid fa-trash-can"></i>Delete</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-2">
-                        Hybrid • Full-time • $100,000 - $140,000
-                    </p>
-                    <p class="mt-4 text-gray-700">
-                        Develop automated testing suites using Playwright and Cypress.
-                        Ensure high performance and reliability across all web and mobile platforms.
-                    </p>
-                    <div class="card-actions mt-6">
-                        <button class="btn btn-outline btn-success">Interview</button>
-                        <button class="btn btn-outline btn-error">Reject</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card bg-white shadow-md border">
-                <div class="card-body">
-
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h2 class="card-title text-xl">Mobile First Corp</h2>
-                            <p class="text-gray-600">React Native Developer</p>
-                        </div>
-                          <div class="grid col-span-1 gap-2">
-                            <span class="badge badge-outline py-4">Not Applied</span>
-                            <span class="btn btn-outline btn-error "><i class="fa-solid fa-trash-can"></i>Delete</span>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-500 mt-2">
-                        Remote • Full-time • $130,000 - $175,000
-                    </p>
-
-                    <p class="mt-4 text-gray-700">
-                        Build cross-platform mobile applications using React Native.
-                        Work on products used by millions of users worldwide.
-                    </p>
-
-                    <div class="card-actions mt-6">
-                        <button class="btn btn-outline btn-success">Interview</button>
-                        <button class="btn btn-outline btn-error">Reject</button>
-                    </div>
-
-                </div>
-            </div> -->
-
         </div>
     </section>
     <script src="script/script.js"></script>

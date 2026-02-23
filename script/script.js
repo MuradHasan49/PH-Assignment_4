@@ -1,4 +1,4 @@
-// --- ১. এলিমেন্টগুলো সিলেক্ট করা (Selection) ---
+// element selection
 const jobContainer = document.getElementById('jobContainer');
 const interviewSection = document.getElementById('interviewSection');
 const rejectedSection = document.getElementById('rejectedSection');
@@ -12,41 +12,41 @@ const totalDisplay2 = document.getElementById('total2');
 const interviewDisplay = document.getElementById('interview');
 const rejectedDisplay = document.getElementById('rejected');
 
-// noJobSection
+
 const noJobSection = document.getElementById('noJobSection');
 
-// --- ২. ডাটা রাখার লিস্ট (State) ---
+
 let interviewList = [];
 let rejectedList = [];
 
-// --- ৩. স্ট্যাটাস আপডেট করার ফাংশন ---
+
 function updateJobCounts() {
     totalDisplay.innerText = jobContainer.children.length;
     interviewDisplay.innerText = interviewList.length;
     rejectedDisplay.innerText = rejectedList.length;
 }
 
-// --- ৪. No Job Section দেখানোর সহজ ফাংশন ---
+
 function updateNoJobStatus() {
-    // বর্তমানে কোন সেকশনটি দেখা যাচ্ছে তা চেক করবে
-   const isInterviewActive = !interviewSection.classList.contains('hidden');
+    const isInterviewActive = !interviewSection.classList.contains('hidden');
     const isRejectedActive = !rejectedSection.classList.contains('hidden');
     const isMainActive = !jobContainer.classList.contains('hidden');
 
     if (isInterviewActive) {
         noJobSection.classList.toggle('hidden', interviewList.length > 0);
-    } 
+    }
     else if (isRejectedActive) {
         noJobSection.classList.toggle('hidden', rejectedList.length > 0);
-    } 
+    }
     else if (isMainActive) {
-        // মেইন কন্টেইনারে ১টি কার্ড থাকলেও hidden থাকবে
         const mainJobCount = jobContainer.querySelectorAll('.card').length;
         noJobSection.classList.toggle('hidden', mainJobCount > 0);
     }
+    else {
+        noJobSection.classList.add('hidden');
+    }
 }
 
-// --- ৫. কার্ড থেকে ডাটা সংগ্রহ করার ফাংশন ---
 function extractJobData(cardElement) {
     return {
         cardTtitle: cardElement.querySelector(".card-title").innerText,
@@ -56,28 +56,27 @@ function extractJobData(cardElement) {
     };
 }
 
-// --- ৬. টগল বাটন বা নেভিগেশন লজিক ---
+
 document.getElementById('perent').addEventListener("click", function (event) {
     const clickedBtn = event.target.closest('button');
     if (!clickedBtn) return;
 
-    // সব বাটনের ডিজাইন রিসেট করা
+
     const buttons = [toggleAllBtn, toggleInterviewBtn, toggleRejectedBtn];
     buttons.forEach(btn => {
         btn.classList.remove('bg-[#3B82F6]', 'text-white');
         btn.classList.add('bg-gray-300', 'text-[#64748B]');
     });
 
-    // ক্লিক করা বাটনে কালার দেওয়া
     clickedBtn.classList.remove('bg-gray-300', 'text-[#64748B]');
     clickedBtn.classList.add('bg-[#3B82F6]', 'text-white');
 
-    // সব সেকশন হাইড করা
+
     jobContainer.classList.add('hidden');
     interviewSection.classList.add('hidden');
     rejectedSection.classList.add('hidden');
 
-    // সেকশন রেন্ডার এবং দেখানো
+
     if (clickedBtn.id === 'toggle-interview') {
         renderInterviewSection();
         totalDisplay2.innerHTML = interviewList.length + " of 8 jobs";
@@ -89,14 +88,13 @@ document.getElementById('perent').addEventListener("click", function (event) {
         totalDisplay2.innerHTML = jobContainer.children.length + " jobs";
     }
 
-    // স্টেট আপডেট (Empty state check)
     updateNoJobStatus();
 });
 
-// --- ৭. ইন্টারভিউ সেকশন রেন্ডার করা ---
+
 function renderInterviewSection() {
     interviewSection.classList.remove('hidden');
-    interviewSection.innerHTML = ""; 
+    interviewSection.innerHTML = "";
 
     interviewList.forEach(job => {
         const div = document.createElement("div");
@@ -124,7 +122,7 @@ function renderInterviewSection() {
     });
 }
 
-// --- ৮. রিজেক্টেড সেকশন রেন্ডার করা ---
+
 function renderRejectedSection() {
     rejectedSection.classList.remove('hidden');
     rejectedSection.innerHTML = "";
@@ -155,7 +153,6 @@ function renderRejectedSection() {
     });
 }
 
-// --- ৯. কমন হ্যান্ডলার (মুভ এবং ডিলিট করার জন্য) ---
 function handleJobActions(event, source) {
     const card = event.target.closest('.card');
     if (!card) return;
@@ -163,7 +160,7 @@ function handleJobActions(event, source) {
     const data = extractJobData(card);
     const title = data.cardTtitle;
 
-    // মুভ টু ইন্টারভিউ
+
     if (event.target.classList.contains('interviewBtn')) {
         rejectedList = rejectedList.filter(item => item.cardTtitle !== title);
         if (!interviewList.some(item => item.cardTtitle === title)) {
@@ -171,7 +168,7 @@ function handleJobActions(event, source) {
         }
         if (source !== 'main') card.remove();
     }
-    // মুভ টু রিজেক্টেড
+
     else if (event.target.classList.contains('rejectBtn')) {
         interviewList = interviewList.filter(item => item.cardTtitle !== title);
         if (!rejectedList.some(item => item.cardTtitle === title)) {
@@ -179,14 +176,14 @@ function handleJobActions(event, source) {
         }
         if (source !== 'main') card.remove();
     }
-    // ডিলিট করা
+
     else if (event.target.classList.contains('deletebtn')) {
         card.remove();
         interviewList = interviewList.filter(item => item.cardTtitle !== title);
         rejectedList = rejectedList.filter(item => item.cardTtitle !== title);
     }
 
-    // অল জব সেকশনে ব্যাজ আপডেট
+
     if (source === 'main') {
         const badge = card.querySelector('.badge');
         if (event.target.classList.contains('interviewBtn')) {
@@ -198,25 +195,26 @@ function handleJobActions(event, source) {
         }
     }
 
-    // ডাটা এবং UI আপডেট
     updateJobCounts();
-    updateNoJobStatus(); // <--- এটিই ডিলিটের পর চেক করবে
-    
-    // টোটাল টেক্সট আপডেট
+    updateNoJobStatus();
+
     if (source === 'interview') totalDisplay2.innerHTML = interviewList.length + " of 8 jobs";
     if (source === 'rejected') totalDisplay2.innerHTML = rejectedList.length + " of 8 jobs";
     if (source === 'main') totalDisplay2.innerHTML = jobContainer.children.length + " jobs";
 }
 
-// ইভেন্ট লিসেনার সেটআপ
-jobContainer.addEventListener('click', (e) => handleJobActions(e, 'main'));
-interviewSection.addEventListener('click', (e) => handleJobActions(e, 'interview'));
-rejectedSection.addEventListener('click', (e) => handleJobActions(e, 'rejected'));
+// All EventListener
+jobContainer.addEventListener('click', function (event) {
+    handleJobActions(event, 'main');
+});
 
+interviewSection.addEventListener('click', function (event) {
+    handleJobActions(event, 'interview');
+});
 
-// ALGA PIRIT
+rejectedSection.addEventListener('click', function (event) {
+    handleJobActions(event, 'rejected');
+});
 
-
-// শুরুতে একবার রান করা
 updateJobCounts();
 updateNoJobStatus();
