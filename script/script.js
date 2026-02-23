@@ -12,6 +12,9 @@ const totalDisplay2 = document.getElementById('total2');
 const interviewDisplay = document.getElementById('interview');
 const rejectedDisplay = document.getElementById('rejected');
 
+// noJobSection
+const noJobSection = document.getElementById('noJobSection');
+
 // --- ২. ডাটা রাখার লিস্ট (State) ---
 let interviewList = [];
 let rejectedList = [];
@@ -23,7 +26,27 @@ function updateJobCounts() {
     rejectedDisplay.innerText = rejectedList.length;
 }
 
-// --- ৪. কার্ড থেকে ডাটা সংগ্রহ করার ফাংশন ---
+// --- ৪. No Job Section দেখানোর সহজ ফাংশন ---
+function updateNoJobStatus() {
+    // বর্তমানে কোন সেকশনটি দেখা যাচ্ছে তা চেক করবে
+   const isInterviewActive = !interviewSection.classList.contains('hidden');
+    const isRejectedActive = !rejectedSection.classList.contains('hidden');
+    const isMainActive = !jobContainer.classList.contains('hidden');
+
+    if (isInterviewActive) {
+        noJobSection.classList.toggle('hidden', interviewList.length > 0);
+    } 
+    else if (isRejectedActive) {
+        noJobSection.classList.toggle('hidden', rejectedList.length > 0);
+    } 
+    else if (isMainActive) {
+        // মেইন কন্টেইনারে ১টি কার্ড থাকলেও hidden থাকবে
+        const mainJobCount = jobContainer.querySelectorAll('.card').length;
+        noJobSection.classList.toggle('hidden', mainJobCount > 0);
+    }
+}
+
+// --- ৫. কার্ড থেকে ডাটা সংগ্রহ করার ফাংশন ---
 function extractJobData(cardElement) {
     return {
         cardTtitle: cardElement.querySelector(".card-title").innerText,
@@ -33,22 +56,19 @@ function extractJobData(cardElement) {
     };
 }
 
-// --- ৫. টগল বাটন বা নেভিগেশন লজিক ---
+// --- ৬. টগল বাটন বা নেভিগেশন লজিক ---
 document.getElementById('perent').addEventListener("click", function (event) {
     const clickedBtn = event.target.closest('button');
     if (!clickedBtn) return;
 
     // সব বাটনের ডিজাইন রিসেট করা
-    // ১. সবগুলো বাটন একটি অ্যারের মধ্যে রাখা
     const buttons = [toggleAllBtn, toggleInterviewBtn, toggleRejectedBtn];
-
     buttons.forEach(btn => {
-        // প্রথমে সব বাটন থেকে নীল কালার সরিয়ে ধূসর কালার দেওয়া
         btn.classList.remove('bg-[#3B82F6]', 'text-white');
         btn.classList.add('bg-gray-300', 'text-[#64748B]');
     });
 
-    // ২. শুধুমাত্র যে বাটনটি ক্লিক করা হয়েছে (clickedBtn), সেটিতে নীল কালার দেওয়া
+    // ক্লিক করা বাটনে কালার দেওয়া
     clickedBtn.classList.remove('bg-gray-300', 'text-[#64748B]');
     clickedBtn.classList.add('bg-[#3B82F6]', 'text-white');
 
@@ -57,24 +77,26 @@ document.getElementById('perent').addEventListener("click", function (event) {
     interviewSection.classList.add('hidden');
     rejectedSection.classList.add('hidden');
 
-    // যে বাটন ক্লিক করা হয়েছে সেই সেকশন দেখানো
+    // সেকশন রেন্ডার এবং দেখানো
     if (clickedBtn.id === 'toggle-interview') {
         renderInterviewSection();
-        totalDisplay2.innerHTML = interviewList.length + " jobs";
+        totalDisplay2.innerHTML = interviewList.length + " of 8 jobs";
     } else if (clickedBtn.id === 'toggle-rejected') {
         renderRejectedSection();
-        totalDisplay2.innerHTML = rejectedList.length + " jobs";;
-
+        totalDisplay2.innerHTML = rejectedList.length + " of 8 jobs";
     } else {
-        totalDisplay2.innerHTML = jobContainer.children.length + " jobs";;
         jobContainer.classList.remove('hidden');
+        totalDisplay2.innerHTML = jobContainer.children.length + " jobs";
     }
+
+    // স্টেট আপডেট (Empty state check)
+    updateNoJobStatus();
 });
 
-// --- ৬. ইন্টারভিউ সেকশন রেন্ডার করা ---
+// --- ৭. ইন্টারভিউ সেকশন রেন্ডার করা ---
 function renderInterviewSection() {
     interviewSection.classList.remove('hidden');
-    interviewSection.innerHTML = ""; // আগের ডাটা পরিষ্কার করা
+    interviewSection.innerHTML = ""; 
 
     interviewList.forEach(job => {
         const div = document.createElement("div");
@@ -94,7 +116,7 @@ function renderInterviewSection() {
                 <p class="priceP text-sm text-gray-500 mt-2">${job.priceP}</p>
                 <p class="jobDis mt-4 text-gray-700">${job.jobDis}</p>
                 <div class="card-actions mt-6">
-                <button class=" btn btn-outline btn-success">INTERVIEW</button>
+                    <button class="btn btn-outline btn-success">INTERVIEW</button>
                     <button class="rejectBtn btn btn-outline btn-error">REJECTED</button>
                 </div>
             </div>`;
@@ -102,7 +124,7 @@ function renderInterviewSection() {
     });
 }
 
-// --- ৭. রিজেক্টেড সেকশন রেন্ডার করা ---
+// --- ৮. রিজেক্টেড সেকশন রেন্ডার করা ---
 function renderRejectedSection() {
     rejectedSection.classList.remove('hidden');
     rejectedSection.innerHTML = "";
@@ -126,14 +148,14 @@ function renderRejectedSection() {
                 <p class="jobDis mt-4 text-gray-700">${job.jobDis}</p>
                 <div class="card-actions mt-6">
                     <button class="interviewBtn btn btn-outline btn-success">INTERVIEW</button>
-                     <button class=" btn btn-outline btn-error">REJECTED</button>
+                    <button class="btn btn-outline btn-error">REJECTED</button>
                 </div>
             </div>`;
         rejectedSection.appendChild(div);
     });
 }
 
-// --- ৮. কমন হ্যান্ডলার (মুভ এবং ডিলিট করার জন্য) ---
+// --- ৯. কমন হ্যান্ডলার (মুভ এবং ডিলিট করার জন্য) ---
 function handleJobActions(event, source) {
     const card = event.target.closest('.card');
     if (!card) return;
@@ -176,22 +198,25 @@ function handleJobActions(event, source) {
         }
     }
 
+    // ডাটা এবং UI আপডেট
     updateJobCounts();
+    updateNoJobStatus(); // <--- এটিই ডিলিটের পর চেক করবে
+    
+    // টোটাল টেক্সট আপডেট
+    if (source === 'interview') totalDisplay2.innerHTML = interviewList.length + " of 8 jobs";
+    if (source === 'rejected') totalDisplay2.innerHTML = rejectedList.length + " of 8 jobs";
+    if (source === 'main') totalDisplay2.innerHTML = jobContainer.children.length + " jobs";
 }
 
-// ১. মেইন জব কন্টেইনারের জন্য লিসেনার
-jobContainer.addEventListener('click', function (e) {
-    handleJobActions(e, 'main');
-});
+// ইভেন্ট লিসেনার সেটআপ
+jobContainer.addEventListener('click', (e) => handleJobActions(e, 'main'));
+interviewSection.addEventListener('click', (e) => handleJobActions(e, 'interview'));
+rejectedSection.addEventListener('click', (e) => handleJobActions(e, 'rejected'));
 
-// ২. ইন্টারভিউ সেকশনের জন্য লিসেনার
-interviewSection.addEventListener('click', function (e) {
-    handleJobActions(e, 'interview');
-});
 
-// ৩. রিজেক্টেড সেকশনের জন্য লিসেনার
-rejectedSection.addEventListener('click', function (e) {
-    handleJobActions(e, 'rejected');
-});
-// শুরুতে একবার কাউন্ট চালানো
+// ALGA PIRIT
+
+
+// শুরুতে একবার রান করা
 updateJobCounts();
+updateNoJobStatus();
